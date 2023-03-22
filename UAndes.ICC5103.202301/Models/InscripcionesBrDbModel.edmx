@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="InscripcionesBrDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="InscripcionesBrDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Persona">
           <Key>
             <PropertyRef Name="Id" />
@@ -16,11 +16,25 @@
           <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
           <Property Name="Dirección" Type="nchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="RealStateForm">
+          <Key>
+            <PropertyRef Name="attentionNumber" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="attentionNumber" Type="int" Nullable="false" />
+          <Property Name="natureOfTheDeed" Type="bit" Nullable="false" />
+          <Property Name="commune" Type="varchar(max)" Nullable="false" />
+          <Property Name="block" Type="varchar(max)" Nullable="false" />
+          <Property Name="property" Type="varchar(max)" Nullable="false" />
+          <Property Name="sheets" Type="int" Nullable="false" />
+          <Property Name="inscriptionDate" Type="date" Nullable="false" />
+          <Property Name="inscriptionNumber" Type="int" Nullable="false" />
+        </EntityType>
         <EntityContainer Name="InscripcionesBrDbModelStoreContainer">
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RealStateForm" EntityType="Self.RealStateForm" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InscripcionesBrDbModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -37,7 +51,22 @@
         </EntityType>
         <EntityContainer Name="InscripcionesBrDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="RealStateForm" EntityType="InscripcionesBrDbModel.RealStateForm" />
         </EntityContainer>
+        <EntityType Name="RealStateForm">
+          <Key>
+            <PropertyRef Name="attentionNumber" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="attentionNumber" Type="Int32" Nullable="false" />
+          <Property Name="natureOfTheDeed" Type="Boolean" Nullable="false" />
+          <Property Name="commune" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="block" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="property" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="sheets" Type="Int32" Nullable="false" />
+          <Property Name="inscriptionDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="inscriptionNumber" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +82,21 @@
                 <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
                 <ScalarProperty Name="Email" ColumnName="Email" />
                 <ScalarProperty Name="Dirección" ColumnName="Dirección" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RealStateForm">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.RealStateForm">
+              <MappingFragment StoreEntitySet="RealStateForm">
+                <ScalarProperty Name="inscriptionNumber" ColumnName="inscriptionNumber" />
+                <ScalarProperty Name="inscriptionDate" ColumnName="inscriptionDate" />
+                <ScalarProperty Name="sheets" ColumnName="sheets" />
+                <ScalarProperty Name="property" ColumnName="property" />
+                <ScalarProperty Name="block" ColumnName="block" />
+                <ScalarProperty Name="commune" ColumnName="commune" />
+                <ScalarProperty Name="natureOfTheDeed" ColumnName="natureOfTheDeed" />
+                <ScalarProperty Name="attentionNumber" ColumnName="attentionNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

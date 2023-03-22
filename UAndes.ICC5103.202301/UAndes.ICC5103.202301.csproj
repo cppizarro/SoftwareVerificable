@@ -152,6 +152,9 @@
     <Compile Include="Models\Persona.cs">
       <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RealStateForm.cs">
+      <DependentUpon>InscripcionesBrDbModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

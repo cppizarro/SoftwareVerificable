@@ -16,6 +16,19 @@ CREATE TABLE [dbo].[Persona](
 ))
 GO
 
+CREATE TABLE [dbo].[RealStateForm] (
+    [Id]                INT           NOT NULL,
+    [attentionNumber]   INT           NOT NULL,
+    [natureOfTheDeed]   BIT           NOT NULL,
+    [commune]           VARCHAR (MAX) NOT NULL,
+    [block]             VARCHAR (MAX) NOT NULL,
+    [property]          VARCHAR (MAX) NOT NULL,
+    [sheets]            INT           NOT NULL,
+    [inscriptionDate]   DATE          NOT NULL,
+    [inscriptionNumber] INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([attentionNumber] ASC))
+GO
+
 
 USE [InscripcionesBrDb]
 GO
