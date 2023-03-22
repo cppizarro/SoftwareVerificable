@@ -29,6 +29,15 @@ CREATE TABLE [dbo].[RealStateForm] (
     PRIMARY KEY CLUSTERED ([attentionNumber] ASC))
 GO
 
+CREATE TABLE [dbo].[People]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [rut] NCHAR(10) NULL, 
+    [ownershipPercentage] FLOAT NULL, 
+    [uncreditedOwnership] BIT NULL
+)
+
+
 
 USE [InscripcionesBrDb]
 GO
