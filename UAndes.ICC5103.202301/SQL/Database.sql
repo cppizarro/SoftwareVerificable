@@ -34,9 +34,12 @@ CREATE TABLE [dbo].[People]
 	[Id] INT NOT NULL PRIMARY KEY, 
     [rut] NCHAR(10) NULL, 
     [ownershipPercentage] FLOAT NULL, 
-    [uncreditedOwnership] BIT NULL
+    [uncreditedOwnership] BIT NULL, 
+    [formsId] INT NULL, 
+    [seller] BIT NULL, 
+    [heir] BIT NULL, 
+    CONSTRAINT [FK_People_(ToTableColumn)] FOREIGN KEY ([formsId]) REFERENCES RealStateForm([attentionNumber]) 
 )
-
 
 
 USE [InscripcionesBrDb]

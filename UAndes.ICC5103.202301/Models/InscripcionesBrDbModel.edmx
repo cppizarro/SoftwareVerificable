@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="InscripcionesBrDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="rut" Type="nchar" MaxLength="10" />
+          <Property Name="ownershipPercentage" Type="float" />
+          <Property Name="uncreditedOwnership" Type="bit" />
+          <Property Name="formsId" Type="int" />
+          <Property Name="seller" Type="bit" />
+          <Property Name="heir" Type="bit" />
+        </EntityType>
         <EntityType Name="Persona">
           <Key>
             <PropertyRef Name="Id" />
@@ -30,9 +42,26 @@
           <Property Name="inscriptionDate" Type="date" Nullable="false" />
           <Property Name="inscriptionNumber" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_People_(ToTableColumn)">
+          <End Role="RealStateForm" Type="Self.RealStateForm" Multiplicity="0..1" />
+          <End Role="People" Type="Self.People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RealStateForm">
+              <PropertyRef Name="attentionNumber" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="formsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InscripcionesBrDbModelStoreContainer">
+          <EntitySet Name="People" EntityType="Self.People" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RealStateForm" EntityType="Self.RealStateForm" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_People_(ToTableColumn)" Association="Self.FK_People_(ToTableColumn)">
+            <End Role="RealStateForm" EntitySet="RealStateForm" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -52,6 +81,11 @@
         <EntityContainer Name="InscripcionesBrDbEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Persona" EntityType="Self.Persona" />
           <EntitySet Name="RealStateForm" EntityType="InscripcionesBrDbModel.RealStateForm" />
+          <EntitySet Name="People" EntityType="InscripcionesBrDbModel.People" />
+          <AssociationSet Name="FK_People__ToTableColumn_" Association="InscripcionesBrDbModel.FK_People__ToTableColumn_">
+            <End Role="RealStateForm" EntitySet="RealStateForm" />
+            <End Role="People" EntitySet="People" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="RealStateForm">
           <Key>
@@ -66,7 +100,33 @@
           <Property Name="sheets" Type="Int32" Nullable="false" />
           <Property Name="inscriptionDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="inscriptionNumber" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="People" Relationship="InscripcionesBrDbModel.FK_People__ToTableColumn_" FromRole="RealStateForm" ToRole="People" />
         </EntityType>
+        <EntityType Name="People">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="rut" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ownershipPercentage" Type="Double" />
+          <Property Name="uncreditedOwnership" Type="Boolean" />
+          <Property Name="formsId" Type="Int32" />
+          <Property Name="seller" Type="Boolean" />
+          <Property Name="heir" Type="Boolean" />
+          <NavigationProperty Name="RealStateForm" Relationship="InscripcionesBrDbModel.FK_People__ToTableColumn_" FromRole="People" ToRole="RealStateForm" />
+        </EntityType>
+        <Association Name="FK_People__ToTableColumn_">
+          <End Type="InscripcionesBrDbModel.RealStateForm" Role="RealStateForm" Multiplicity="0..1" />
+          <End Type="InscripcionesBrDbModel.People" Role="People" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RealStateForm">
+              <PropertyRef Name="attentionNumber" />
+            </Principal>
+            <Dependent Role="People">
+              <PropertyRef Name="formsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -96,6 +156,19 @@
                 <ScalarProperty Name="commune" ColumnName="commune" />
                 <ScalarProperty Name="natureOfTheDeed" ColumnName="natureOfTheDeed" />
                 <ScalarProperty Name="attentionNumber" ColumnName="attentionNumber" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="People">
+            <EntityTypeMapping TypeName="InscripcionesBrDbModel.People">
+              <MappingFragment StoreEntitySet="People">
+                <ScalarProperty Name="heir" ColumnName="heir" />
+                <ScalarProperty Name="seller" ColumnName="seller" />
+                <ScalarProperty Name="formsId" ColumnName="formsId" />
+                <ScalarProperty Name="uncreditedOwnership" ColumnName="uncreditedOwnership" />
+                <ScalarProperty Name="ownershipPercentage" ColumnName="ownershipPercentage" />
+                <ScalarProperty Name="rut" ColumnName="rut" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
